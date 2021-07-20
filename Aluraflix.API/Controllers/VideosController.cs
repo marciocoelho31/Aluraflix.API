@@ -26,7 +26,7 @@ namespace Aluraflix.API.Controllers
         }
 
         [HttpPost]
-        public IActionResult AdicionaVideo([FromBody] Video video)
+        public IActionResult AddVideo([FromBody] Video video)
         {
             _context.Videos.Add(video);
             _context.SaveChanges();
@@ -41,44 +41,39 @@ namespace Aluraflix.API.Controllers
             {
                 return Ok(video);
             }
-            return NotFound();
+            return NotFound($"O vídeo de id {id} não foi encontrado.");
         }
 
-        //[HttpPut("{id}")]
-        //public IActionResult AtualizaFilme(int id, [FromBody] UpdateFilmeDTO filmeDto)
-        //{
-        //    Filme filme = _context.Filmes.FirstOrDefault(filme => filme.Id == id);
-        //    if (filme == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    //filme.Titulo = filmeDto.Titulo;
-        //    //filme.Diretor = filmeDto.Diretor;
-        //    //filme.Genero = filmeDto.Genero;
-        //    //filme.Duracao = filmeDto.Duracao;
-        //    _mapper.Map(filmeDto, filme);
-        //    _context.SaveChanges();
+        [HttpPut("{id}")]
+        public IActionResult UpdateVideo(int id, [FromBody] Video video)
+        {
+            Video videoBD = _context.Videos.FirstOrDefault(v => v.Id == id);
+            if (videoBD == null)
+            {
+                return NotFound($"O vídeo de id {id} não foi encontrado.");
+            }
+            videoBD.Titulo = video.Titulo;
+            videoBD.Descricao = video.Descricao;
+            videoBD.Url = video.Url;
+            _context.SaveChanges();
 
-        //    return NoContent();
-        //}
+            return NoContent();
+        }
 
-        //[HttpDelete("{id}")]
-        //public IActionResult DeletaFilme(int id)
-        //{
-        //    Filme filme = _context.Filmes.FirstOrDefault(filme => filme.Id == id);
-        //    if (filme == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    _context.Remove(filme);
-        //    _context.SaveChanges();
+        [HttpDelete("{id}")]
+        public IActionResult RemoveVideo(int id)
+        {
+            Video video = _context.Videos.FirstOrDefault(v => v.Id == id);
+            if (video == null)
+            {
+                return NotFound($"O vídeo de id {id} não foi encontrado.");
+            }
 
-        //    return NoContent();
+            _context.Remove(video);
+            _context.SaveChanges();
 
-
-
-        //}
-
+            return NoContent();
+        }
 
     }
 }
