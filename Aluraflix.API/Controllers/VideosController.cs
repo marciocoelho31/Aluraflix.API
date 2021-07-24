@@ -1,10 +1,7 @@
-﻿using Aluraflix.API.Data;
-using Aluraflix.API.Models;
+﻿using Aluraflix.API.Models;
+using Aluraflix.API.Services;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Aluraflix.API.Controllers
 {
@@ -12,65 +9,68 @@ namespace Aluraflix.API.Controllers
     [Route("[controller]")]
     public class VideosController : ControllerBase
     {
-        private readonly VideosContext _context;
+        private readonly IVideoService _service;
 
-        public VideosController(VideosContext context)
+        public VideosController(IVideoService service)
         {
-            _context = context;
+            _service = service;
         }
 
         [HttpGet]
-        public IEnumerable<Video> GetVideos()
+        public ActionResult<IEnumerable<Video>> Get()
         {
-            return _context.Videos;
-        }
-
-        [HttpPost]
-        public IActionResult AddVideo([FromBody] Video video)
-        {
-            _context.Videos.Add(video);
-            _context.SaveChanges();
-            return CreatedAtAction(nameof(GetVideoById), new { Id = video.Id }, video);
+            var items = _service.GetAllItems();
+            return Ok(items);
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetVideoById(int id)
+        public ActionResult<Video> Get(int id)
         {
-            Video video = _context.Videos.FirstOrDefault(filme => filme.Id == id);
-            if (video != null)
+            var item = _service.GetById(id);
+            if (item == null)
             {
-                return Ok(video);
+                return NotFound();
             }
-            return NotFound($"O vídeo de id {id} não foi encontrado.");
+            return Ok(item);
+        }
+
+        [HttpPost]
+        public ActionResult Post([FromBody] Video value)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var item = _service.Add(value);
+            return CreatedAtAction("Get", new { id = item.Id }, item);
+        }
+
+        [HttpDelete("{id}")]
+        public ActionResult Remove(int id)
+        {
+            var existingItem = _service.GetById(id);
+            if (existingItem == null)
+            {
+                return NotFound();
+            }
+            _service.Remove(id);
+            return Ok();
         }
 
         [HttpPut("{id}")]
         public IActionResult UpdateVideo(int id, [FromBody] Video video)
         {
-            Video videoBD = _context.Videos.FirstOrDefault(v => v.Id == id);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var videoBD = _service.GetById(id);
             if (videoBD == null)
             {
                 return NotFound($"O vídeo de id {id} não foi encontrado.");
             }
-            videoBD.Titulo = video.Titulo;
-            videoBD.Descricao = video.Descricao;
-            videoBD.Url = video.Url;
-            _context.SaveChanges();
-
-            return NoContent();
-        }
-
-        [HttpDelete("{id}")]
-        public IActionResult RemoveVideo(int id)
-        {
-            Video video = _context.Videos.FirstOrDefault(v => v.Id == id);
-            if (video == null)
-            {
-                return NotFound($"O vídeo de id {id} não foi encontrado.");
-            }
-
-            _context.Remove(video);
-            _context.SaveChanges();
+            _service.Update(videoBD, video);
 
             return NoContent();
         }
