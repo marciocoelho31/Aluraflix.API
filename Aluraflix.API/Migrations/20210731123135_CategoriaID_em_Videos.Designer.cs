@@ -2,14 +2,16 @@
 using Aluraflix.API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Aluraflix.API.Migrations
 {
     [DbContext(typeof(VideosContext))]
-    partial class VideosContextModelSnapshot : ModelSnapshot
+    [Migration("20210731123135_CategoriaID_em_Videos")]
+    partial class CategoriaID_em_Videos
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

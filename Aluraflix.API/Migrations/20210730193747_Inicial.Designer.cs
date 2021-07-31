@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Aluraflix.API.Migrations
 {
     [DbContext(typeof(VideosContext))]
-    [Migration("20210719173320_Inicial")]
+    [Migration("20210730193747_Inicial")]
     partial class Inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

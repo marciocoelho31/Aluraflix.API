@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Configuration;
+using System;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -8,12 +9,12 @@ using Xunit;
 
 namespace Aluraflix.API.Tests.Integration
 {
-    public class VideoIntegrationTest
+    public class CategoriaIntegrationTest
     {
         private readonly TestServer testServer;
         private readonly HttpClient httpClient;
 
-        public VideoIntegrationTest()
+        public CategoriaIntegrationTest()
         {
             var configuration = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json")
@@ -28,10 +29,10 @@ namespace Aluraflix.API.Tests.Integration
 
         [Theory]
         [InlineData("GET")]
-        public async Task VideoGetAllTestAsync(string method)
+        public async Task CategoriaGetAllTestAsync(string method)
         {
             // Arrange
-            var request = new HttpRequestMessage(new HttpMethod(method), "/videos/");
+            var request = new HttpRequestMessage(new HttpMethod(method), "/categorias/");
 
             // Act
             var response = await httpClient.SendAsync(request);
@@ -43,10 +44,10 @@ namespace Aluraflix.API.Tests.Integration
 
         [Theory]
         [InlineData("GET", 1)]
-        public async Task VideoGetTestAsync(string method, int? id = null)
+        public async Task CategoriaGetTestAsync(string method, int? id = null)
         {
             // Arrange
-            var request = new HttpRequestMessage(new HttpMethod(method), $"/videos/{id}");
+            var request = new HttpRequestMessage(new HttpMethod(method), $"/categorias/{id}");
 
             // Act
             var response = await httpClient.SendAsync(request);
@@ -57,11 +58,11 @@ namespace Aluraflix.API.Tests.Integration
         }
 
         [Theory]
-        [InlineData("GET", "search")]
-        public async Task VideoGetFromQueryStringTestAsync(string method, string search)
+        [InlineData("GET", 1)]
+        public async Task CategoriaGetVideosByCategoryIdTestAsync(string method, int? categoriaId = null)
         {
             // Arrange
-            var request = new HttpRequestMessage(new HttpMethod(method), "/videos/?search=" + search);
+            var request = new HttpRequestMessage(new HttpMethod(method), $"/categorias/{categoriaId.ToString()}/videos/");
 
             // Act
             var response = await httpClient.SendAsync(request);

@@ -10,5 +10,7 @@ namespace Aluraflix.API.Services
         Video GetById(int id);
         void Remove(int id);
         void Update(Video videoBD, Video video);
+        IEnumerable<Video> GetItemsFromQueryString(string search);
+        IEnumerable<Video> GetItemsByCategoriaId(int id);
     }
 }

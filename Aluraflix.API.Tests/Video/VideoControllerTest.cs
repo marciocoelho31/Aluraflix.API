@@ -11,24 +11,27 @@ namespace Aluraflix.API.Tests
     public class VideoControllerTest
     {
         VideosController _controller;
-        IVideoService _service;
+        IVideoService _videoService;
+        ICategoriaService _categoriaService;
 
         public VideoControllerTest()
         {
-            _service = new VideoServiceFake();
-            _controller = new VideosController(_service);
+            _videoService = new VideoServiceFake();
+            _categoriaService = new CategoriaServiceFake();
+            _controller = new VideosController(_videoService, _categoriaService);
         }
 
         [Fact]
-        public void Get_WhenCalled_ReturnsOkResult()
+        public void GetVideos_WhenCalled_ReturnsOkResult()
         {
             // Act
             var okResult = _controller.Get();
             // Assert
             Assert.IsType<OkObjectResult>(okResult.Result);
         }
+       
         [Fact]
-        public void Get_WhenCalled_ReturnsAllItems()
+        public void GetVideos_WhenCalled_ReturnsAllItems()
         {
             // Act
             var okResult = _controller.Get().Result as OkObjectResult;
@@ -38,16 +41,16 @@ namespace Aluraflix.API.Tests
         }
 
         [Fact]
-        public void GetById_UnknownIdPassed_ReturnsNotFoundResult()
+        public void GetVideoById_UnknownIdPassed_ReturnsNotFoundResult()
         {
             // Act
             var notFoundResult = _controller.Get(99);
             // Assert
-            Assert.IsType<NotFoundResult>(notFoundResult.Result);
+            Assert.IsType<NotFoundObjectResult>(notFoundResult.Result);
         }
 
         [Fact]
-        public void GetById_ExistingIdPassed_ReturnsOkResult()
+        public void GetVideoById_ExistingIdPassed_ReturnsOkResult()
         {
             // Arrange
             var testeId = 1;
@@ -58,7 +61,7 @@ namespace Aluraflix.API.Tests
         }
 
         [Fact]
-        public void GetById_ExistingIdPassed_ReturnsRightItem()
+        public void GetVideoById_ExistingIdPassed_ReturnsRightItem()
         {
             // Arrange
             var testeId = 1;
@@ -70,7 +73,7 @@ namespace Aluraflix.API.Tests
         }
 
         [Fact]
-        public void Add_InvalidObjectPassed_ReturnsBadRequest()
+        public void AddVideo_InvalidObjectPassed_ReturnsBadRequest()
         {
             // Arrange
             var nameMissingItem = new Video()
@@ -86,7 +89,7 @@ namespace Aluraflix.API.Tests
         }
 
         [Fact]
-        public void Add_ValidObjectPassed_ReturnsCreatedResponse()
+        public void AddVideo_ValidObjectPassed_ReturnsCreatedResponse()
         {
             // Arrange
             Video testeItem = new Video()
@@ -102,7 +105,7 @@ namespace Aluraflix.API.Tests
         }
 
         [Fact]
-        public void Add_ValidObjectPassed_ReturnedResponseHasCreatedItem()
+        public void AddVideo_ValidObjectPassed_ReturnedResponseHasCreatedItem()
         {
             // Arrange
             var testItem = new Video()
@@ -122,18 +125,18 @@ namespace Aluraflix.API.Tests
         }
 
         [Fact]
-        public void Remove_NotExistingIdPassed_ReturnsNotFoundResponse()
+        public void RemoveVideo_NotExistingIdPassed_ReturnsNotFoundResponse()
         {
             // Arrange
             var IdInexistente = 99;
             // Act
             var badResponse = _controller.Remove(IdInexistente);
             // Assert
-            Assert.IsType<NotFoundResult>(badResponse);
+            Assert.IsType<NotFoundObjectResult>(badResponse);
         }
 
         [Fact]
-        public void Remove_ExistingIdPassed_ReturnsOkResult()
+        public void RemoveVideo_ExistingIdPassed_ReturnsOkResult()
         {
             // Arrange
             var Id_Existente = 2;
@@ -144,18 +147,18 @@ namespace Aluraflix.API.Tests
         }
 
         [Fact]
-        public void Remove_ExistingIdPassed_RemovesOneItem()
+        public void RemoveVideo_ExistingIdPassed_RemovesOneItem()
         {
             // Arrange
             var Id_Existente = 2;
             // Act
             var okResponse = _controller.Remove(Id_Existente);
             // Assert
-            Assert.Equal(2, _service.GetAllItems().Count());
+            Assert.Equal(2, _videoService.GetAllItems().Count());
         }
 
         [Fact]
-        public void Update_InvalidObjectPassed_ReturnsBadRequest()
+        public void UpdateVideo_InvalidObjectPassed_ReturnsBadRequest()
         {
             // Arrange
             var nameMissingItem = new Video()
@@ -177,7 +180,7 @@ namespace Aluraflix.API.Tests
         }
 
         [Fact]
-        public void Update_ValidObjectPassed_ReturnsNoContent()
+        public void UpdateVideo_ValidObjectPassed_ReturnsNoContent()
         {
             // Arrange
             Video testeItem = new Video()
@@ -199,7 +202,7 @@ namespace Aluraflix.API.Tests
         }
 
         [Fact]
-        public void Update_ValidObjectPassed_ReturnedResponseHasUpdatedItem()
+        public void UpdateVideo_ValidObjectPassed_ReturnedResponseHasUpdatedItem()
         {
             // Arrange
             var testItem = new Video()
@@ -221,6 +224,15 @@ namespace Aluraflix.API.Tests
             // Assert
             Assert.IsType<Video>(updatedItem);
             Assert.Equal("Teste titulo alterado", updatedItem.Titulo);
+        }
+
+        [Fact]
+        public void GetVideosFromQueryString_WhenCalled_ReturnsOkResult()
+        {
+            // Act
+            var statusCode200Result = _controller.Get("teste");
+            // Assert
+            Assert.IsType<OkObjectResult>(statusCode200Result.Result);
         }
 
     }

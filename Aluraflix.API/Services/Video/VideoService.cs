@@ -1,5 +1,6 @@
 ﻿using Aluraflix.API.Data;
 using Aluraflix.API.Models;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -47,8 +48,27 @@ namespace Aluraflix.API.Services
             videoBD.Titulo = video.Titulo;
             videoBD.Descricao = video.Descricao;
             videoBD.Url = video.Url;
+            videoBD.CategoriaId = video.CategoriaId;
 
             _context.SaveChanges();
         }
+
+        public IEnumerable<Video> GetItemsFromQueryString(string search)
+        {
+            return _context.Videos
+                .Where(
+                    v => v.Titulo.ToUpper().Contains(search.ToUpper())
+                    || v.Descricao.ToUpper().Contains(search.ToUpper())
+                );
+        }
+
+        public IEnumerable<Video> GetItemsByCategoriaId(int id)
+        {
+            return _context.Videos
+                .Where(
+                    v => v.CategoriaId == id
+                );
+        }
+
     }
 }

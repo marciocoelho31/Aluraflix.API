@@ -63,7 +63,23 @@ namespace Aluraflix.API.Tests
             item.Titulo = video.Titulo;
             item.Descricao = video.Descricao;
             item.Url = video.Url;
+        }
 
+        public IEnumerable<Video> GetItemsFromQueryString(string search)
+        {
+            return _videos
+                .Where(
+                    v => v.Titulo.ToUpper().Contains(search.ToUpper())
+                    || v.Descricao.ToUpper().Contains(search.ToUpper())
+                );
+        }
+
+        public IEnumerable<Video> GetItemsByCategoriaId(int id)
+        {
+            return _videos
+                .Where(
+                    v => v.CategoriaId == id
+                );
         }
     }
 }
