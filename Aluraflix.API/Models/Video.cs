@@ -21,9 +21,11 @@ namespace Aluraflix.API.Models
         public string Titulo { get; set; }
 
         [Required(ErrorMessage = "A descrição do vídeo é obrigatória.")]
+        [MaxLength(500, ErrorMessage = "O tamanho máximo da descrição do vídeo é de 500 caracteres.")]
         public string Descricao { get; set; }
 
         [Required(ErrorMessage = "A URL do vídeo é obrigatória.")]
+        [MaxLength(200, ErrorMessage = "O tamanho máximo da URL do vídeo é de 200 caracteres.")]
         [Url(ErrorMessage = "URL do vídeo inválida")]
         public string Url { get; set; }
     }
