@@ -19,20 +19,25 @@ namespace Aluraflix.API.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<Video>> Get([FromQuery] string search = "")
+        public ActionResult<IEnumerable<Video>> Get([FromQuery] string search = "", [FromQuery] int page = 0)
         {
-            if (string.IsNullOrEmpty(search))
+            if (page > 0)
             {
-                return Ok(_videoService.GetAllItems());
+                // default solicitado na regra de negócio - "paginação que retorne 5 itens por página"
+                return Ok(_videoService.GetAllItemsPaginated(page, 5));
+            }
+            else if (!string.IsNullOrEmpty(search))
+            {
+                return Ok(_videoService.GetItemsFromQueryString(search));
             }
             else
             {
-                return Ok(_videoService.GetItemsFromQueryString(search));
+                return Ok(_videoService.GetAllItems());
             }
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Video> Get(int id)
+        public ActionResult<Video> GetById(int id)
         {
             var item = _videoService.GetById(id);
             if (item == null)

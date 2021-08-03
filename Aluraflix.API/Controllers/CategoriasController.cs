@@ -19,14 +19,21 @@ namespace Aluraflix.API.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<Categoria>> Get()
+        public ActionResult<IEnumerable<Categoria>> Get([FromQuery] int page = 0)
         {
-            var items = _categoriaService.GetAllItems();
-            return Ok(items);
+            if (page > 0)
+            {
+                // default solicitado na regra de negócio - "paginação que retorne 5 itens por página"
+                return Ok(_categoriaService.GetAllItemsPaginated(page, 5));
+            }
+            else
+            {
+                return Ok(_categoriaService.GetAllItems());
+            }
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Categoria> Get(int id)
+        public ActionResult<Categoria> GetById(int id)
         {
             var item = _categoriaService.GetById(id);
             if (item == null)

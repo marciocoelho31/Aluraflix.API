@@ -49,5 +49,21 @@ namespace Aluraflix.API.Services
 
             _context.SaveChanges();
         }
+
+        public IEnumerable<Categoria> GetAllItemsPaginated(int page, int page_size)
+        {
+            if (page > 0)
+            {
+                return _context.Categorias
+                    .Skip((page - 1) * page_size)
+                    .OrderBy(v => v.Id)
+                    .Take(page_size);
+            }
+            else
+            {
+                return _context.Categorias;
+            }
+        }
+
     }
 }
