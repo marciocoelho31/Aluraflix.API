@@ -71,5 +71,20 @@ namespace Aluraflix.API.Tests.Integration
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }
 
+        [Theory]
+        [InlineData("GET", 1)]
+        public async Task VideoGetPaginatedTestAsync(string method, int page)
+        {
+            // Arrange
+            var request = new HttpRequestMessage(new HttpMethod(method), "/videos/?page=" + page);
+
+            // Act
+            var response = await httpClient.SendAsync(request);
+
+            // Assert
+            response.EnsureSuccessStatusCode();
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        }
+
     }
 }

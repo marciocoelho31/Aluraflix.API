@@ -59,5 +59,12 @@ namespace Aluraflix.API.Tests
             item.Cor = categoria.Cor;
         }
 
+        public IEnumerable<Categoria> GetAllItemsPaginated(int page, int page_size)
+        {
+            return _categorias
+                .Skip((page - 1) * page_size)
+                    .OrderBy(v => v.Id)
+                    .Take(page_size);
+        }
     }
 }

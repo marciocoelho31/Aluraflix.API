@@ -29,7 +29,7 @@ namespace Aluraflix.API.Tests
             // Assert
             Assert.IsType<OkObjectResult>(okResult.Result);
         }
-       
+
         [Fact]
         public void GetVideos_WhenCalled_ReturnsAllItems()
         {
@@ -41,10 +41,28 @@ namespace Aluraflix.API.Tests
         }
 
         [Fact]
+        public void GetVideosFromQueryString_WhenCalled_ReturnsOkResult()
+        {
+            // Act
+            var statusCode200Result = _controller.Get("teste");
+            // Assert
+            Assert.IsType<OkObjectResult>(statusCode200Result.Result);
+        }
+
+        [Fact]
+        public void GetVideosPaginated_WhenCalled_ReturnsOkResult()
+        {
+            // Act
+            var statusCode200Result = _controller.Get("", 1);
+            // Assert
+            Assert.IsType<OkObjectResult>(statusCode200Result.Result);
+        }
+
+        [Fact]
         public void GetVideoById_UnknownIdPassed_ReturnsNotFoundResult()
         {
             // Act
-            var notFoundResult = _controller.Get(99);
+            var notFoundResult = _controller.GetById(99);
             // Assert
             Assert.IsType<NotFoundObjectResult>(notFoundResult.Result);
         }
@@ -55,7 +73,7 @@ namespace Aluraflix.API.Tests
             // Arrange
             var testeId = 1;
             // Act
-            var okResult = _controller.Get(testeId);
+            var okResult = _controller.GetById(testeId);
             // Assert
             Assert.IsType<OkObjectResult>(okResult.Result);
         }
@@ -66,7 +84,7 @@ namespace Aluraflix.API.Tests
             // Arrange
             var testeId = 1;
             // Act
-            var okResult = _controller.Get(testeId).Result as OkObjectResult;
+            var okResult = _controller.GetById(testeId).Result as OkObjectResult;
             // Assert
             Assert.IsType<Video>(okResult.Value);
             Assert.Equal(testeId, (okResult.Value as Video).Id);
@@ -169,7 +187,7 @@ namespace Aluraflix.API.Tests
             _controller.ModelState.AddModelError("Titulo", "Required");
 
             var testeId = 1;
-            var okResult = _controller.Get(testeId).Result as OkObjectResult;
+            var okResult = _controller.GetById(testeId).Result as OkObjectResult;
             var existingItem = okResult.Value as Video;
 
             // Act
@@ -191,7 +209,7 @@ namespace Aluraflix.API.Tests
             };
 
             var testeId = 1;
-            var okResult = _controller.Get(testeId).Result as OkObjectResult;
+            var okResult = _controller.GetById(testeId).Result as OkObjectResult;
             var existingItem = okResult.Value as Video;
 
             // Act
@@ -213,26 +231,17 @@ namespace Aluraflix.API.Tests
             };
 
             var testeId = 1;
-            var okResult = _controller.Get(testeId).Result as OkObjectResult;
+            var okResult = _controller.GetById(testeId).Result as OkObjectResult;
             var existingItem = okResult.Value as Video;
 
             // Act
             var response = _controller.UpdateVideo(existingItem.Id, testItem);
 
-            var updatedItem = (_controller.Get(testeId).Result as OkObjectResult).Value as Video;
+            var updatedItem = (_controller.GetById(testeId).Result as OkObjectResult).Value as Video;
 
             // Assert
             Assert.IsType<Video>(updatedItem);
             Assert.Equal("Teste titulo alterado", updatedItem.Titulo);
-        }
-
-        [Fact]
-        public void GetVideosFromQueryString_WhenCalled_ReturnsOkResult()
-        {
-            // Act
-            var statusCode200Result = _controller.Get("teste");
-            // Assert
-            Assert.IsType<OkObjectResult>(statusCode200Result.Result);
         }
 
     }

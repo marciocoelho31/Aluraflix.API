@@ -81,5 +81,13 @@ namespace Aluraflix.API.Tests
                     v => v.CategoriaId == id
                 );
         }
+
+        public IEnumerable<Video> GetAllItemsPaginated(int page, int page_size)
+        {
+            return _videos
+                .Skip((page - 1) * page_size)
+                    .OrderBy(v => v.Id)
+                    .Take(page_size);
+        }
     }
 }

@@ -29,7 +29,16 @@ namespace Aluraflix.API.Tests
             // Assert
             Assert.IsType<OkObjectResult>(okResult.Result);
         }
-        
+
+        [Fact]
+        public void GetCategoriasPaginated_WhenCalled_ReturnsOkResult()
+        {
+            // Act
+            var okResult = _controller.Get(1);
+            // Assert
+            Assert.IsType<OkObjectResult>(okResult.Result);
+        }
+
         [Fact]
         public void GetCategorias_WhenCalled_ReturnsAllItems()
         {
@@ -41,10 +50,21 @@ namespace Aluraflix.API.Tests
         }
 
         [Fact]
+        public void GetVideosByCategoriaId_WhenCalled_ReturnsOkResult()
+        {
+            // Arrange
+            var testeId = 1;
+            // Act
+            var okResult = _controller.GetVideosByCategoriaId(testeId);
+            // Assert
+            Assert.IsType<OkObjectResult>(okResult.Result);
+        }
+
+        [Fact]
         public void GetCategoriaById_UnknownIdPassed_ReturnsNotFoundResult()
         {
             // Act
-            var notFoundResult = _controller.Get(99);
+            var notFoundResult = _controller.GetById(99);
             // Assert
             Assert.IsType<NotFoundObjectResult>(notFoundResult.Result);
         }
@@ -55,7 +75,7 @@ namespace Aluraflix.API.Tests
             // Arrange
             var testeId = 1;
             // Act
-            var okResult = _controller.Get(testeId);
+            var okResult = _controller.GetById(testeId);
             // Assert
             Assert.IsType<OkObjectResult>(okResult.Result);
         }
@@ -66,7 +86,7 @@ namespace Aluraflix.API.Tests
             // Arrange
             var testeId = 1;
             // Act
-            var okResult = _controller.Get(testeId).Result as OkObjectResult;
+            var okResult = _controller.GetById(testeId).Result as OkObjectResult;
             // Assert
             Assert.IsType<Categoria>(okResult.Value);
             Assert.Equal(testeId, (okResult.Value as Categoria).Id);
@@ -165,7 +185,7 @@ namespace Aluraflix.API.Tests
             _controller.ModelState.AddModelError("Titulo", "Required");
 
             var testeId = 1;
-            var okResult = _controller.Get(testeId).Result as OkObjectResult;
+            var okResult = _controller.GetById(testeId).Result as OkObjectResult;
             var existingItem = okResult.Value as Categoria;
 
             // Act
@@ -186,7 +206,7 @@ namespace Aluraflix.API.Tests
             };
 
             var testeId = 1;
-            var okResult = _controller.Get(testeId).Result as OkObjectResult;
+            var okResult = _controller.GetById(testeId).Result as OkObjectResult;
             var existingItem = okResult.Value as Categoria;
 
             // Act
@@ -207,28 +227,17 @@ namespace Aluraflix.API.Tests
             };
 
             var testeId = 1;
-            var okResult = _controller.Get(testeId).Result as OkObjectResult;
+            var okResult = _controller.GetById(testeId).Result as OkObjectResult;
             var existingItem = okResult.Value as Categoria;
 
             // Act
             var response = _controller.UpdateCategoria(existingItem.Id, testItem);
 
-            var updatedItem = (_controller.Get(testeId).Result as OkObjectResult).Value as Categoria;
+            var updatedItem = (_controller.GetById(testeId).Result as OkObjectResult).Value as Categoria;
 
             // Assert
             Assert.IsType<Categoria>(updatedItem);
             Assert.Equal("Teste titulo alterado", updatedItem.Titulo);
-        }
-
-        [Fact]
-        public void GetVideosByCategoriaId_WhenCalled_ReturnsOkResult()
-        {
-            // Arrange
-            var testeId = 1;
-            // Act
-            var okResult = _controller.GetVideosByCategoriaId(testeId);
-            // Assert
-            Assert.IsType<OkObjectResult>(okResult.Result);
         }
 
     }
