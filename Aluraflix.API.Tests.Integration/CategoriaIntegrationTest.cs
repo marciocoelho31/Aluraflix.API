@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -25,6 +26,10 @@ namespace Aluraflix.API.Tests.Integration
                 .UseStartup<Startup>());
 
             httpClient = testServer.CreateClient();
+            httpClient.DefaultRequestHeaders.Authorization =
+                new AuthenticationHeaderValue(
+                    "Basic", Convert.ToBase64String(
+                        System.Text.ASCIIEncoding.ASCII.GetBytes("test:test")));
         }
 
         [Theory]

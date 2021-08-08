@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Aluraflix.API.Models
+namespace Aluraflix.API.Entities
 {
     public class Categoria
     {

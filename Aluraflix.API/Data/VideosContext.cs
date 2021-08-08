@@ -1,4 +1,5 @@
-﻿using Aluraflix.API.Models;
+﻿using Aluraflix.API.Entities;
+using Aluraflix.API.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

@@ -1,10 +1,12 @@
-﻿using Aluraflix.API.Models;
+﻿using Aluraflix.API.Entities;
 using Aluraflix.API.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using System.Collections.Generic;
 
 namespace Aluraflix.API.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class CategoriasController : ControllerBase

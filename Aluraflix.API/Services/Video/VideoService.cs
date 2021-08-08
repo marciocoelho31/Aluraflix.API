@@ -1,5 +1,5 @@
 ﻿using Aluraflix.API.Data;
-using Aluraflix.API.Models;
+using Aluraflix.API.Entities;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
@@ -83,6 +83,11 @@ namespace Aluraflix.API.Services
             {
                 return _context.Videos;
             }
+        }
+
+        public IEnumerable<Video> GetThreeFirstFreeVideos()
+        {
+            return _context.Videos.Take(3);
         }
 
     }

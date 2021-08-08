@@ -1,4 +1,4 @@
-﻿using Aluraflix.API.Models;
+﻿using Aluraflix.API.Entities;
 using System.Collections.Generic;
 
 namespace Aluraflix.API.Services
@@ -9,6 +9,7 @@ namespace Aluraflix.API.Services
         IEnumerable<Video> GetItemsFromQueryString(string search);
         IEnumerable<Video> GetItemsByCategoriaId(int id);
         IEnumerable<Video> GetAllItemsPaginated(int page, int page_size);
+        IEnumerable<Video> GetThreeFirstFreeVideos();
         Video Add(Video novoItem);
         Video GetById(int id);
         void Remove(int id);

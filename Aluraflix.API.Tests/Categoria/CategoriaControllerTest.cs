@@ -1,5 +1,5 @@
 ﻿using Aluraflix.API.Controllers;
-using Aluraflix.API.Models;
+using Aluraflix.API.Entities;
 using Aluraflix.API.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;

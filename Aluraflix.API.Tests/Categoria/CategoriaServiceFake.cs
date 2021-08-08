@@ -1,4 +1,4 @@
-﻿using Aluraflix.API.Models;
+﻿using Aluraflix.API.Entities;
 using Aluraflix.API.Services;
 using System;
 using System.Collections.Generic;

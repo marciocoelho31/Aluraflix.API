@@ -1,4 +1,5 @@
 ﻿using Aluraflix.API.Data;
+using Aluraflix.API.Entities;
 using Aluraflix.API.Models;
 using System.Collections.Generic;
 using System.Linq;

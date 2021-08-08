@@ -7,6 +7,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Authentication;
+using Aluraflix.API.Helpers;
 
 namespace Aluraflix.API
 {
@@ -26,8 +28,14 @@ namespace Aluraflix.API
                 opts => opts.UseMySQL(Configuration.GetConnectionString("VideosConnection"))
                 );
 
+            // configure basic authentication 
+            services.AddAuthentication("BasicAuthentication")
+                .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
+
+            // configure DI for application services
             services.AddScoped<IVideoService, VideoService>();
             services.AddScoped<ICategoriaService, CategoriaService>();
+            services.AddScoped<IUsuarioService, UsuarioService>();
 
             services.AddControllers()
                 .AddNewtonsoftJson(options =>
@@ -54,6 +62,7 @@ namespace Aluraflix.API
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

@@ -1,10 +1,12 @@
-﻿using Aluraflix.API.Models;
+﻿using Aluraflix.API.Entities;
 using Aluraflix.API.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using System.Collections.Generic;
 
 namespace Aluraflix.API.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class VideosController : ControllerBase
@@ -94,6 +96,13 @@ namespace Aluraflix.API.Controllers
             _videoService.Update(videoBD, video);
 
             return NoContent();
+        }
+
+        [AllowAnonymous]
+        [HttpGet("free")]
+        public ActionResult<IEnumerable<Video>> GetThreeFirstFreeVideos()
+        {
+            return Ok(_videoService.GetThreeFirstFreeVideos());
         }
 
     }

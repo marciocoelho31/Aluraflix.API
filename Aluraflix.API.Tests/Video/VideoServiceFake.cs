@@ -1,4 +1,4 @@
-﻿using Aluraflix.API.Models;
+﻿using Aluraflix.API.Entities;
 using Aluraflix.API.Services;
 using System;
 using System.Collections.Generic;
@@ -88,6 +88,11 @@ namespace Aluraflix.API.Tests
                 .Skip((page - 1) * page_size)
                     .OrderBy(v => v.Id)
                     .Take(page_size);
+        }
+
+        public IEnumerable<Video> GetThreeFirstFreeVideos()
+        {
+            return _videos.Take(3);
         }
     }
 }
