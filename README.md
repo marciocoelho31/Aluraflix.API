@@ -1,5 +1,46 @@
 # Aluraflix.API - Alura Challenge Backend
 
+## Semana 3 - autenticação e paginação
+
+- Para garantir a segurança dos dados, implemente algum tipo de autenticação, para que só os usuários autenticados possam acessar as rotas de GET, POST, PUT e DELETE.
+Caso a autenticação não seja válida, retornar uma mensagem informando Não autorizado ou Credenciais inválidas.
+Caso usuário e senha inválido, informar Usuário e senha inválido.
+```
+/users/authenticate
+```
+Endpoint público que aceita requisições HTTP POST contendo o nome do usuário e senha no corpo da mensagem. Se o usuário ou senha estiverem corretos, os detalhes do usuário são retornados.
+```
+/users
+```
+Rota segura que aceita requisições HTTP GET e retorna uma lista de todos os usuários na aplicação se o HTTP Authorization Header contém credenciais válidas de uma autenticação básica. Caso contrário, a resposta é um 401 Unauthorized.
+
+- Criar o seguinte endpoint com um número fixo de filmes disponível, sem a necessidade de autenticação:
+```
+GET /videos/free
+```
+### Para testar no Postman
+#### Instruções sobre como usar o app Postman para autenticar um usuário com a API, e fazer uma requisição autenticada com autenticação básica para recuperar dados da API:
+1. Download: https://www.getpostman.com/
+2. Abra uma nova aba de request clicando no botão (+) no final das abas.
+3. Mude o tipo de método de http request para "POST".
+4. No campo de URL digite o endereço da rota de autenticação da API. Por exemplo, http://localhost:5000/users/authenticate.
+5. Na aba "Body", mude o tipo da mensagem para "raw", o formato para "JSON (application/json)".
+6. Clique no botão "Send". Digite o conteúdo abaixo na área do corpo da mensagem:
+```
+{
+    "username": "test",
+    "password": "test"
+}
+```
+7. Você deve receber uma mensagem de "200 OK" contendo os detalhes do usuário no corpo da resposta, o que indica que o usuário e senha estão corretos.
+#### Para fazer uma consulta com as credenciais de autenticação básica:
+1. Abra uma nova aba de request clicando no botão (+) no final das abas.
+2. Mude o tipo de método de http request para "GET".
+3. No campo de URL digite o endereço desejado. Por exemplo, http://localhost:5000/videos.
+4. Na aba de "Authorization" abaixo da URL, mude para "Basic Auth", e digite test no Username e test em "Password".
+5. Clique no botão "Send".
+6. Você deve receber uma mensagem de "200 OK" contendo um JSON com os registros que você deseja visualizar.
+
 ## Semana 2 - implementação da feature de Categorias:
 
 Depois de alguns testes com usuários, foi definido que a próxima feature a ser desenvolvida nesse projeto é a divisão dos vídeos por categoria, para melhorar a experiência de organização da lista de vídeos pelo usuário.
