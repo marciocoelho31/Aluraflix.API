@@ -2,6 +2,8 @@
 
 ## Semana 3 - autenticação e paginação
 
+Nesta semana, o desafio será complementar a API adicionando paginação nas requisições de vídeos e categorias. Além disso, foi solicitado para segurança dos recursos proporcionados pela API, adicionar um método de autenticação.
+
 - Para garantir a segurança dos dados, implemente algum tipo de autenticação, para que só os usuários autenticados possam acessar as rotas de GET, POST, PUT e DELETE.
 Caso a autenticação não seja válida, retornar uma mensagem informando Não autorizado ou Credenciais inválidas.
 Caso usuário e senha inválido, informar Usuário e senha inválido.
