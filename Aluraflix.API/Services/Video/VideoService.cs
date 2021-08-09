@@ -87,7 +87,9 @@ namespace Aluraflix.API.Services
 
         public IEnumerable<Video> GetThreeFirstFreeVideos()
         {
-            return _context.Videos.Take(3);
+            return _context.Videos
+                .OrderBy(v => v.Id)
+                .Take(3);
         }
 
     }

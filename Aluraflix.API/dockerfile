@@ -1,0 +1,4 @@
+﻿FROM mcr.microsoft.com/dotnet/aspnet:5.0
+WORKDIR /app
+COPY /app /app
+CMD ASPNETCORE_URLS=http://*:$PORT dotnet Aluraflix.API.dll

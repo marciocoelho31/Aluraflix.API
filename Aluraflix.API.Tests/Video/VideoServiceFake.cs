@@ -92,7 +92,9 @@ namespace Aluraflix.API.Tests
 
         public IEnumerable<Video> GetThreeFirstFreeVideos()
         {
-            return _videos.Take(3);
+            return _videos
+                .OrderBy(v => v.Id)
+                .Take(3);
         }
     }
 }

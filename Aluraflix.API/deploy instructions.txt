@@ -1,0 +1,10 @@
+dotnet build
+dotnet publish -c release -o app/ .
+
+docker build --pull -t aluraflixapimc .
+
+docker tag aluraflixapimc registry.heroku.com/aluraflix-api-mc/web
+
+docker push registry.heroku.com/aluraflix-api-mc/web
+
+heroku container:release web -a aluraflix-api-mc
