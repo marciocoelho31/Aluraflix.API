@@ -1,6 +1,8 @@
 # Aluraflix.API - Alura Challenge Backend
 
-## Semana 3 - autenticação e paginação
+Deploy realizado com sucesso! API disponível em https://aluraflix-api-mc.herokuapp.com/
+
+## Semana 3 - autenticação, paginação e deploy
 
 Nesta semana, o desafio será complementar a API adicionando paginação nas requisições de vídeos e categorias. Além disso, foi solicitado para segurança dos recursos proporcionados pela API, adicionar um método de autenticação.
 
