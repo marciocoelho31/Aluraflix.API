@@ -8,11 +8,11 @@ Nesta semana, o desafio será complementar a API adicionando paginação nas req
 Caso a autenticação não seja válida, retornar uma mensagem informando Não autorizado ou Credenciais inválidas.
 Caso usuário e senha inválido, informar Usuário e senha inválido.
 ```
-/users/authenticate
+/usuarios/authenticate
 ```
 Endpoint público que aceita requisições HTTP POST contendo o nome do usuário e senha no corpo da mensagem. Se o usuário ou senha estiverem corretos, os detalhes do usuário são retornados.
 ```
-/users
+/usuarios
 ```
 Rota segura que aceita requisições HTTP GET e retorna uma lista de todos os usuários na aplicação se o HTTP Authorization Header contém credenciais válidas de uma autenticação básica. Caso contrário, a resposta é um 401 Unauthorized.
 
