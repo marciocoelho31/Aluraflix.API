@@ -2,6 +2,8 @@
 
 Deploy realizado com sucesso! API disponível em https://aluraflix-api-mc.herokuapp.com/
 
+<img src="https://user-images.githubusercontent.com/29611672/130509603-bfad7006-9ced-443e-bcef-d2f3562ba736.png" width="180" height="180"> <img src="https://user-images.githubusercontent.com/29611672/130509671-9a270d4d-6938-40e9-bff6-3f8af7c9e920.png" width="180" height="180">
+
 ## Semana 3 - autenticação, paginação e deploy
 
 Nesta semana, o desafio será complementar a API adicionando paginação nas requisições de vídeos e categorias. Além disso, foi solicitado para segurança dos recursos proporcionados pela API, adicionar um método de autenticação.
